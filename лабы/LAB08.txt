@@ -1,0 +1,30 @@
+import re
+
+# 1
+text = input("Введите строку: ")
+pattern = r'\+(\d)\((\d{3})\)(\d{3})-(\d{2})-(\d{2})'
+match = re.search(pattern, text)
+
+if match:
+    code_country = match.group(1)
+    code_city = match.group(2)
+    number = match.group(3) + match.group(4) + match.group(5)
+    print(f"Найден номер: +{code_country}({code_city}){match.group(3)}-{match.group(4)}-{match.group(5)}")
+    print(f"Код страны: {code_country}")
+    print(f"Код города: {code_city}")
+    print(f"Номер абонента: {number}")
+else:
+    print("Номер не найден")
+
+# 2
+text = input("Введите строку с датами: ")
+pattern = r'(\d{2})\.(\d{2})\.(\d{4})'
+# Пример преобразования в формат ГГГГ-ММ-ДД
+result = re.sub(pattern, r'\3-\2-\1', text)
+print(result)
+
+# 3
+text = input("Введите строку: ")
+words = re.split(r'[.,!?\- ]+', text)
+words = [w for w in words if w]
+print(words)

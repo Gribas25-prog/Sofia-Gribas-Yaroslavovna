@@ -1,0 +1,94 @@
+# 1
+class Transport:
+    def init(self, speed, capacity):
+        self.speed = speed
+        self.capacity = capacity
+
+    def info(self):
+        print(f"Скорость: {self.speed}, Вместимость: {self.capacity}")
+
+class Bus(Transport):
+    def init(self, speed, capacity, route):
+        super().init(speed, capacity)
+        self.route = route
+
+    def info(self):
+        super().info()
+        print(f"Маршрут: {self.route}")
+
+t = Transport(120, 40)
+t.info()
+
+b = Bus(80, 25, "15A")
+b.info()
+
+
+# 2
+class BankAccount:
+    def init(self, balance=0):
+        self.__balance = balance
+
+    def deposit(self, amount):
+        if amount > 0:
+            self.__balance += amount
+            print(f"Внесено {amount}, баланс: {self.__balance}")
+
+    def withdraw(self, amount):
+        if amount <= 0:
+            print("Сумма должна быть положительной")
+        elif amount > self.__balance:
+            print(f"Недостаточно средств. Баланс: {self.__balance}")
+        else:
+            self.__balance -= amount
+            print(f"Снято {amount}, баланс: {self.__balance}")
+
+    def get_balance(self):
+        return self.__balance
+
+
+acc1 = BankAccount(1000)
+acc2 = BankAccount(500)
+
+acc1.deposit(300)
+acc1.withdraw(2000)
+acc1.withdraw(400)
+
+acc2.deposit(200)
+
+print("Баланс acc1:", acc1.get_balance())
+print("Баланс acc2:", acc2.get_balance())
+
+
+# 3
+class Person:
+    def init(self, name, profession):
+        self.name = name
+        self.profession = profession
+
+    def introduce(self):
+        print(f"Я {self.name}, профессия: {self.profession}")
+
+class Employee(Person):
+    def init(self, name, profession, position):
+        super().init(name, profession)
+        self.position = position
+
+    def introduce(self):
+        super().introduce()
+        print(f"Должность: {self.position}")
+
+class Manager(Employee):
+    def hold_meeting(self):
+        print(f"{self.name} проводит собрание")
+
+
+p = Person("Анна", "врач")
+e = Employee("Иван", "инженер", "старший")
+m = Manager("Ольга", "менеджер", "руководитель")
+
+p.introduce()
+print("---")
+e.introduce()
+print("---")
+m.introduce()
+m.hold_meeting()

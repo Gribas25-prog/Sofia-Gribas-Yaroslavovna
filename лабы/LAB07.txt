@@ -1,0 +1,96 @@
+import argparse
+import sys
+import time
+import os
+import math
+
+def task1(args):
+    print(f"Привет, {args.name}!")
+
+def task2(args):
+    x = args.x
+    y = args.y
+    op = args.op
+    if op == "сложение":
+        print(f"{x} + {y} = {x + y}")
+    elif op == "вычитание":
+        print(f"{x} - {y} = {x - y}")
+    elif op == "умножение":
+        print(f"{x} * {y} = {x * y}")
+    elif op == "деление":
+        if y != 0:
+            print(f"{x} / {y} = {x / y}")
+        else:
+            print("Ошибка: деление на ноль")
+    else:
+        print(f"x = {x}, y = {y}")
+
+def task3(args):
+    strings = args.strings
+    if args.count:
+        print(len(strings))
+    else:
+        for s in strings:
+            print(s)
+
+def task4(args):
+    try:
+        with open(args.input, "r", encoding="utf-8") as f:
+            data = f.read()
+        with open(args.output, "w", encoding="utf-8") as f:
+            f.write(data)
+        print(f"Файл {args.input} скопирован в {args.output}")
+    except Exception as e:
+        print("Ошибка:", e)
+
+def task5(args):
+    n = args.num
+    verbose = args.verbose
+    res = 1
+    for i in range(1, n + 1):
+        res *= i
+        if verbose:
+            print(f"Шаг {i}: {res}")
+    print(f"Результат: {res}")
+
+def main():
+parser = argparse.ArgumentParser(description="CLI для 5 учебных заданий")
+subparsers = parser.add_subparsers(dest="command", required=True)
+
+#1
+p1 = subparsers.add_parser("greet", help="Приветствие пользователя")
+p1.add_argument("name", help="Имя пользователя")
+p1.set_defaults(func=task1)
+
+#2
+p2 = subparsers.add_parser("calc", help="Два числа и операция")
+p2.add_argument("x", type=float, help="Первое число")
+p2.add_argument("y", type=float, help="Второе число")
+p2.add_argument("--op", choices=["сложение", "вычитание", "умножение", "деление"],
+                    help="Матем операция")
+p2.set_defaults(func=task2)
+
+#3
+p3 = subparsers.add_parser("strings", help="Список строк")
+p3.add_argument("strings", nargs="*", help="Список строк")
+p3.add_argument("--count", action="store_true", help="Количество строк")
+p3.set_defaults(func=task3)
+
+#4
+p4 = subparsers.add_parser("copyfile", help="Копирование файла")
+p4.add_argument("--input", required=True, help="Входной файл")
+p4.add_argument("--output", required=True, help="Выходной файл")
+p4.set_defaults(func=task4)
+
+#5
+p5 = subparsers.add_parser("factorial", help="Факториал с verbose")
+p5.add_argument("num", type=int, help="Число для факториала")
+p5.add_argument("--verbose", action="store_true", help="Вывод шагов")
+p5.set_defaults(func=task5)
+
+args = parser.parse_args()
+args.func(args)
+
+
+if name == "main":
+    main()

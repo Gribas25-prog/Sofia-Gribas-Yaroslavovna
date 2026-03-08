@@ -1,0 +1,93 @@
+import re
+#1
+text = input("Введите строку: ")
+
+pattern = r'\+(\d)\((\d{3})\)(\d{3})-(\d{2})-(\d{2})'
+match = re.search(pattern, text)
+
+if match:
+    code_country = match.group(1)
+    code_city = match.group(2)
+    number = match.group(3) + match.group(4) + match.group(5)
+
+    print(f"Найден номер: +{code_country}({code_city}){match.group(3)}-{match.group(4)}-{match.group(5)}")
+    print(f"Код страны: {code_country}")
+    print(f"Код города: {code_city}")
+    print(f"Номер абонента: {number}")
+else:
+    print("Номер не найден")
+
+
+#2
+text = input("Введите строку с датами: ")
+
+pattern = r'(\d{2})\.(\d{2})\.(\d{4})'
+
+# меняем формат даты: ДД.ММ.ГГГГ → ГГГГ-ММ-ДД
+result = re.sub(pattern, r'\3-\2-\1', text)
+
+print("Результат:", result)
+
+
+#3
+text = input("Введите строку: ")
+
+words = re.split(r'[.,!?\- ]+', text)
+words = [w for w in words if w]
+
+print("Список слов:", words)
+
+
+#4
+def find_strings_with_vowels(**kwargs):
+    vowels = "aeiouyAEIOUYаеёиоуыэюяАЕЁИОУЫЭЮЯ"
+    result = {}
+
+    for key, value in kwargs.items():
+        if isinstance(value, str):
+            count = sum(1 for char in value if char in vowels)
+            if count >= 3:
+                result[key] = value
+
+    return result
+
+
+data = find_strings_with_vowels(
+    name="Alexander",
+    city="Rome",
+    word="sky",
+    text="beautiful",
+    language="Python",
+    number=123
+)
+
+print("Подходящие аргументы:", data)
+
+
+#5
+def factorial_recursive(n):
+    if n == 0 or n == 1:
+        return 1
+    return n * factorial_recursive(n - 1)
+
+
+def factorial_iterative(n):
+    result = 1
+    for i in range(1, n + 1):
+        result *= i
+    return result
+
+
+num = input("Введите целое число: ")
+
+try:
+    num = int(num)
+
+    if num < 0:
+        print("Факториал для отрицательных чисел не определён")
+    else:
+        print("Рекурсивный факториал:", factorial_recursive(num))
+        print("Итеративный факториал:", factorial_iterative(num))
+
+except ValueError:
+    print("Ошибка: нужно ввести целое число")

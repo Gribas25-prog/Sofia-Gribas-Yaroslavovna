@@ -1,0 +1,70 @@
+#1
+i = input("Введите строку: ")
+a = i.lower().replace(" ", "")
+if a == a[::-1]:
+    print("Строка является палиндромом.")
+else:
+    print("Строка не является палиндромом.")
+    for b in range(len(a) // 2):
+        if a[b] != a[-(b+1)]:
+            print(f"Несовпадение в {b}: '{a[b]}' != '{a[-(b+1)]}'")
+            break
+
+#2
+import string
+
+i = input("Введите строку: ")
+a = i.strip()
+b = len(a.split())
+f = sum(x.isalpha() for x in a)
+g = sum(x.isdigit() for x in a)
+j = a.count(" ")
+k = sum(x in string.punctuation for x in a)
+print("Слов:", b)
+print("Букв:", f)
+print("Цифр:", g)
+print("Пробелов:", j)
+print("Знаков препинания:", k)
+
+#3
+i = input("Введите строку: ")
+a = "аеёиоуыэюяAEЁИОУЫЭЮЯ"
+b = ""
+for f in i:
+    if f.lower() in a:
+        b += f.upper()
+    elif f.isalpha():
+        b += f.lower()
+    else:
+        b += f
+print(b)
+
+#4
+i = input("Введите дату и время (ДД.ММ.ГГГГ ЧЧ:ММ:СС): ")
+try:
+    a, b = i.split()
+    f, g, j = a.split(".")
+    k, l, q = b.split(":")
+    print("День:", f)
+    print("Месяц:", g)
+    print("Год:", j)
+    print("Часы:", k)
+    print("Минуты:", l)
+    print("Секунды:", q)
+except:
+    print("Неверный формат ввода!")
+
+#5
+import string
+i = input("Первая строка: ")
+a = input("Вторая строка: ")
+b = str.maketrans("", "", string.punctuation)
+f = set(i.lower().translate(b).split())
+g = set(a.lower().translate(b).split())
+j = f - g
+k = g - f
+if not j and not k:
+    print("Все слова присутствуют в обеих строках.")
+else:
+    print("Слова только в первой строке:", j or "нет")
+    print("Слова только во второй строке:", k or "нет")
